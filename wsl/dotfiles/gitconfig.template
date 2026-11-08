@@ -1,0 +1,86 @@
+# devbox-template: installed by devbox/wsl/install-dotfiles.sh. Edit freely; the installer
+# keeps your email on re-runs and never replaces a hand-written .gitconfig.
+[user]
+	name = Carmit Haas
+	email = <work-email>
+
+[init]
+	defaultBranch = main
+
+[core]
+	autocrlf = input
+	editor = code --wait
+	pager = less -FRX
+	fsmonitor = false
+
+[pull]
+	rebase = true
+
+[push]
+	autoSetupRemote = true
+	default = current
+	followTags = true
+
+[fetch]
+	prune = true
+	pruneTags = true
+
+[rebase]
+	autoStash = true
+	autoSquash = true
+
+[rerere]
+	enabled = true
+	autoupdate = true
+
+[diff]
+	colorMoved = default
+	algorithm = histogram
+	mnemonicPrefix = true
+	renames = true
+
+[merge]
+	conflictStyle = diff3
+
+[branch]
+	sort = -committerdate
+
+[tag]
+	sort = version:refname
+
+[status]
+	showUntrackedFiles = all
+
+[color]
+	ui = auto
+
+[alias]
+	st = status -sb
+	co = checkout
+	sw = switch
+	br = branch -vv
+	lg = log --graph --pretty=format:'%C(auto)%h%d %s %C(dim)%an %ar' --abbrev-commit
+	lga = log --graph --pretty=format:'%C(auto)%h%d %s %C(dim)%an %ar' --abbrev-commit --all
+	last = log -1 HEAD --stat
+	unstage = reset HEAD --
+	amend = commit --amend --no-edit
+	wip = !git add -A && git commit -m wip --no-verify
+	undo = reset --soft HEAD~1
+	aliases = config --get-regexp ^alias\\.
+	root = rev-parse --show-toplevel
+	who = shortlog -sn --no-merges
+
+[credential]
+	# Recommended: let the GitHub CLI hold the token and act as the helper.
+	#   gh auth login            (browser flow works through the proxy)
+	#   gh auth setup-git        (writes credential.https://github.com.helper = !gh auth git-credential)
+	#
+	# Alternative: share Git Credential Manager with the Windows side (Git for Windows installed).
+	# Written as git stores it (the backslash is doubled inside this file):
+	#   helper = /mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe
+	# or from a shell:
+	#   git config --global credential.helper "/mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe"
+
+[safe]
+	# Repos on /mnt/c appear "dubiously owned" to git. Add paths here if you must keep any there.
+	# directory = /mnt/c/Users/<you>/src/some-repo

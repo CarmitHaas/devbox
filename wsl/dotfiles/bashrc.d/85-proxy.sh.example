@@ -1,0 +1,14 @@
+# shellcheck shell=bash
+# 85-proxy.sh.example: ONLY for an explicit proxy (host:port or PAC). A transparent
+# TLS-inspecting proxy needs none of this, just the CA (install-corp-ca.sh).
+#
+# To use: copy to ~/.bashrc.d/85-proxy.sh, fill in the host and port, open a new shell.
+# The installer ignores *.example files on purpose.
+
+export HTTP_PROXY="http://proxy.example.internal:8080"
+export HTTPS_PROXY="$HTTP_PROXY"
+export NO_PROXY="localhost,127.0.0.1,::1,.local,.internal,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+export http_proxy="$HTTP_PROXY" https_proxy="$HTTPS_PROXY" no_proxy="$NO_PROXY"
+
+# apt does not read these variables; bootstrap.sh writes /etc/apt/apt.conf.d/95-devbox-proxy
+# from them. Docker Desktop has its own proxy page under Settings > Resources > Proxies.

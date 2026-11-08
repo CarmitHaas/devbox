@@ -1,0 +1,89 @@
+# ~/.config/starship.toml: compact two-line prompt, plain ASCII (no Nerd Font needed).
+# Line 1: directory, git, language/infra context. Line 2: the prompt character.
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = true
+command_timeout = 1000
+
+format = """
+$directory$git_branch$git_status$python$nodejs$terraform$kubernetes$aws$cmd_duration$line_break\
+$character"""
+
+[directory]
+truncation_length = 4
+truncate_to_repo = true
+truncation_symbol = ".../"
+read_only = " ro"
+style = "bold cyan"
+
+[git_branch]
+symbol = ""
+format = "[$branch]($style) "
+style = "bold purple"
+truncation_length = 40
+
+[git_status]
+format = '([$all_status$ahead_behind]($style) )'
+style = "yellow"
+conflicted = "x"
+ahead = ">${count}"
+behind = "<${count}"
+diverged = "<>${ahead_count}/${behind_count}"
+untracked = "?${count}"
+stashed = "s${count}"
+modified = "!${count}"
+staged = "+${count}"
+renamed = "r${count}"
+deleted = "-${count}"
+
+[python]
+symbol = "py "
+format = '[${symbol}${version}( \($virtualenv\))]($style) '
+style = "green"
+detect_extensions = ["py"]
+detect_files = ["pyproject.toml", "requirements.txt", ".python-version", "Pipfile", "uv.lock"]
+
+[nodejs]
+symbol = "node "
+format = '[$symbol($version )]($style)'
+style = "green"
+detect_files = ["package.json", ".node-version", ".nvmrc"]
+detect_folders = ["node_modules"]
+
+[terraform]
+symbol = "tf "
+format = '[$symbol$workspace]($style) '
+style = "bold 105"
+detect_extensions = ["tf", "tfvars", "hcl"]
+detect_folders = [".terraform"]
+
+[kubernetes]
+disabled = false
+symbol = "k8s "
+format = '[$symbol$context( \($namespace\))]($style) '
+style = "bold blue"
+
+[aws]
+symbol = "aws "
+format = '[$symbol$profile( @$region)]($style) '
+style = "bold yellow"
+expiration_symbol = " expired"
+
+[cmd_duration]
+min_time = 2000
+format = "[took $duration]($style) "
+style = "dim"
+
+[character]
+success_symbol = "[>](bold green)"
+error_symbol = "[>](bold red)"
+
+# noise off
+[package]
+disabled = true
+[docker_context]
+disabled = true
+[hostname]
+ssh_only = true
+[username]
+show_always = false
