@@ -18,6 +18,7 @@
 #   dotfiles/inputrc         -> ~/.inputrc
 #   dotfiles/starship.toml   -> ~/.config/starship.toml
 #   dotfiles/tmux.conf       -> ~/.tmux.conf
+#   dotfiles/vimrc           -> ~/.vimrc
 #   dotfiles/gitconfig.template -> ~/.gitconfig          (see rules above)
 
 set -euo pipefail
@@ -120,10 +121,11 @@ fi
 
 # --- plain files -------------------------------------------------------------
 
-log "readline, starship, tmux"
+log "readline, starship, tmux, vim"
 install_file "$SRC/inputrc"       "$HOME/.inputrc"
 install_file "$SRC/starship.toml" "${XDG_CONFIG_HOME:-$HOME/.config}/starship.toml"
 install_file "$SRC/tmux.conf"     "$HOME/.tmux.conf"
+install_file "$SRC/vimrc"         "$HOME/.vimrc"
 
 # --- gitconfig ---------------------------------------------------------------
 

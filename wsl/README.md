@@ -207,6 +207,29 @@ follow. Try in this order:
 4. MTU. VPN tunnels often carry a smaller MTU; TLS handshakes then hang after DNS works.
    `sudo ip link set dev eth0 mtu 1350` inside WSL (temporary) tells you if that is it.
 
+## Transcribing a recording locally (Hebrew or English)
+
+`transcribe.sh` turns an audio or video file into a markdown transcript on this machine, with
+faster-whisper on the CPU. Nothing is uploaded; the only network use is the first download of
+the model from huggingface.co (about 1.6 GB per model, needs the corporate CA installed).
+
+```bash
+bash wsl/transcribe.sh --setup                  # one time: venv + both models (coffee break)
+bash wsl/transcribe.sh ~/inbox/memo.m4a         # Hebrew by default, timestamps, writes memo.md
+bash wsl/transcribe.sh --lang en call.mp4       # English
+bash wsl/transcribe.sh --lang auto --no-timestamps x.wav
+```
+
+Speed on a laptop CPU: a 3 minute memo in about a minute, an hour of audio in 20 to 40 minutes.
+The Hebrew model is `ivrit-ai/whisper-large-v3-turbo-ct2` (Apache-2.0, a Hebrew fine-tune of
+Whisper); the general model is `deepdml/faster-whisper-large-v3-turbo-ct2`. Both are
+CTranslate2 conversions and run with int8 weights. Windows files are reachable from WSL under
+`/mnt/c/Users/<you>/...`; the Windows Sound Recorder app saves to `Documents\Sound recordings`.
+
+Record only what you are allowed to record. Your own spoken debrief after a meeting is always
+yours. A meeting with other people needs their knowledge and the organization's rules (the
+Copilot skills `debrief-memo` and `transcript-ingest` take the resulting file from here).
+
 ## Files in this folder
 
 | File | What it does |
@@ -215,6 +238,7 @@ follow. Try in this order:
 | `proxy-check.sh` | reachability and TLS table for every host the toolchain uses, plus proxy env and DNS |
 | `bootstrap.sh` | apt basics, gh, Node 22 + Copilot CLI, kubectl, helm, terraform, terragrunt, aws, k9s, kubectx, yq, zoxide, starship, uv (`--minimal`, `--extras`) |
 | `install-dotfiles.sh` | copies `dotfiles/` into `$HOME` with backups; adds one sourcing block to `~/.bashrc` |
-| `dotfiles/bashrc.d/` | `10-path`, `20-aliases`, `30-history`, `40-tools`, `50-wsl`, `60-git`, `85-proxy.sh.example` |
-| `dotfiles/inputrc`, `starship.toml`, `tmux.conf`, `gitconfig.template` | readline, prompt, tmux, git |
+| `transcribe.sh`, `transcribe.py` | local speech-to-text (faster-whisper, Hebrew default) into a markdown transcript |
+| `dotfiles/bashrc.d/` | `10-path`, `20-aliases`, `30-history`, `40-tools`, `45-editor`, `50-wsl`, `60-git`, `85-proxy.sh.example` |
+| `dotfiles/inputrc`, `starship.toml`, `tmux.conf`, `vimrc`, `gitconfig.template` | readline, prompt, tmux, the vim fallback editor, git |
 | `tools-versions.md` | how to update each tool later |

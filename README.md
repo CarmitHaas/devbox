@@ -23,8 +23,8 @@ With git: `git clone https://github.com/CarmitHaas/devbox.git`
 
 ```
 windows/    install.ps1, winget-packages*.json, wsl-enable.ps1, export-corp-ca.ps1, terminal-settings.md, windows-cheatsheet.md
-wsl/        bootstrap.sh, install-corp-ca.sh, proxy-check.sh, install-dotfiles.sh, dotfiles/, tools-versions.md
-copilot/    copilot-instructions.md, skills/<name>/SKILL.md, install.sh, claude-code-to-copilot.md, first-session.md
+wsl/        bootstrap.sh, install-corp-ca.sh, proxy-check.sh, install-dotfiles.sh, transcribe.sh, dotfiles/, tools-versions.md
+copilot/    copilot-instructions.md, skills/<name>/SKILL.md (18), install.sh, claude-code-to-copilot.md, first-session.md
 cheatsheets/ jira.md, confluence.md, teams-outlook.md, git-on-windows.md
 ```
 

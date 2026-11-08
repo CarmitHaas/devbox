@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page title</title>
+<style>
+/* Tokens. Every color is declared here first, then redefined in BOTH dark blocks below. */
+:root{
+  --ground:#f7f7f5; --panel:#ffffff; --ink:#1c1c1c; --ink-soft:#44474d; --muted:#6e7278;
+  --brand:#2b4c7e; --brand-soft:#e6ecf5; --line:#d9dcdf; --line-strong:#b9bec5;
+  --code-bg:#f0f1f3; --code-ink:#1c1c1c;
+  --note:#2b4c7e; --note-soft:#e6ecf5;
+  --warn:#9a3b1f; --warn-soft:#faece6;
+  --decision:#2f6b3a; --decision-soft:#e7f2e8;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#15171a; --panel:#1e2125; --ink:#ecedee; --ink-soft:#c3c7cc; --muted:#8e949b;
+    --brand:#8fb0e0; --brand-soft:#23304a; --line:#2e3238; --line-strong:#454a52;
+    --code-bg:#121417; --code-ink:#e6e7e9;
+    --note:#8fb0e0; --note-soft:#23304a;
+    --warn:#f0a28a; --warn-soft:#3a251f;
+    --decision:#8fcf9a; --decision-soft:#1f3324;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#15171a; --panel:#1e2125; --ink:#ecedee; --ink-soft:#c3c7cc; --muted:#8e949b;
+  --brand:#8fb0e0; --brand-soft:#23304a; --line:#2e3238; --line-strong:#454a52;
+  --code-bg:#121417; --code-ink:#e6e7e9;
+  --note:#8fb0e0; --note-soft:#23304a;
+  --warn:#f0a28a; --warn-soft:#3a251f;
+  --decision:#8fcf9a; --decision-soft:#1f3324;
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;
+  padding-inline:clamp(16px,4vw,32px);padding-block:0 48px}
+.wrap{max-width:1100px;margin-inline:auto}
+h1,h2,h3{margin:0;line-height:1.2;text-wrap:balance}
+h1{font-size:clamp(26px,4.5vw,34px);font-weight:700}
+h2{font-size:21px;font-weight:700;color:var(--brand)}
+h3{font-size:17px;font-weight:700;margin-top:18px}
+p{margin:0}
+a{color:var(--brand);text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--brand);outline-offset:3px;border-radius:4px}
+code{font-family:var(--mono);font-size:.88em;direction:ltr;unicode-bidi:isolate}
+p code,li code,td code,summary code{background:var(--code-bg);border-radius:4px;padding:1px 6px}
+
+/* Masthead */
+header.mast{padding-block:24px 18px;border-bottom:3px solid var(--brand);display:flex;flex-wrap:wrap;gap:12px 24px;align-items:flex-start;justify-content:space-between}
+.mast .lede{color:var(--ink-soft);font-size:18px;max-width:62ch;margin-top:8px}
+.mast .meta{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:13.5px;color:var(--muted);margin-top:12px}
+.mast .meta b{color:var(--ink-soft);font-weight:600}
+button.theme{font:inherit;font-size:13px;color:var(--ink-soft);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:5px 12px;cursor:pointer;flex:none}
+button.theme:hover{border-color:var(--brand);color:var(--brand)}
+
+/* Layout: TOC beside content on wide screens, above it on narrow ones */
+.layout{display:grid;grid-template-columns:minmax(0,1fr);gap:24px;margin-top:24px}
+@media (min-width:900px){
+  .layout{grid-template-columns:230px minmax(0,1fr);gap:40px}
+  nav#toc{position:sticky;top:16px;align-self:start;max-height:calc(100vh - 32px);overflow:auto}
+}
+nav#toc{font-size:14px}
+nav#toc .toc-title{font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+nav#toc ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+nav#toc a{display:block;color:var(--ink-soft);text-decoration:none;padding:5px 10px;border-inline-start:2px solid var(--line);}
+nav#toc a:hover{color:var(--brand);border-color:var(--brand)}
+@media (max-width:899px){
+  nav#toc ol{flex-direction:row;flex-wrap:wrap;gap:6px}
+  nav#toc a{border:1px solid var(--line);border-radius:999px;padding:4px 12px;background:var(--panel)}
+}
+
+/* Collapsible sections */
+main{display:flex;flex-direction:column;gap:14px;min-width:0}
+section.sec{background:var(--panel);border:1px solid var(--line);border-radius:8px;scroll-margin-top:16px}
+section.sec>details>summary{list-style:none;cursor:pointer;display:flex;align-items:baseline;gap:12px;padding:14px 18px}
+section.sec>details>summary::-webkit-details-marker{display:none}
+section.sec>details>summary::before{content:"+";font-family:var(--mono);color:var(--muted);flex:none;width:1em}
+section.sec>details[open]>summary::before{content:"\2212"}
+section.sec>details>summary .n{font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+.body{padding:0 18px 18px;display:flex;flex-direction:column;gap:12px;color:var(--ink-soft)}
+.body p strong,.body li strong{color:var(--ink)}
+.body ul,.body ol{margin:0;padding-inline-start:1.4em;display:flex;flex-direction:column;gap:4px}
+section.sources .body{font-size:15px}
+
+/* Code with copy button */
+.codewrap{position:relative;direction:ltr}
+pre{margin:0;background:var(--code-bg);color:var(--code-ink);border:1px solid var(--line);border-inline-start:3px solid var(--brand);
+  border-radius:6px;padding:14px 16px;overflow-x:auto;font-family:var(--mono);font-size:13.5px;line-height:1.6;direction:ltr;text-align:left}
+pre code{font-size:inherit;background:none;padding:0}
+button.copy{position:absolute;top:8px;right:8px;font:inherit;font-size:12px;font-family:var(--sans);color:var(--ink-soft);
+  background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:2px 8px;cursor:pointer}
+button.copy:hover{border-color:var(--brand);color:var(--brand)}
+
+/* Callouts */
+.callout{border-inline-start:4px solid var(--brand);background:var(--brand-soft);border-radius:6px;padding:12px 16px;display:grid;gap:4px}
+.callout .callout-label{font-size:12.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.callout-note{border-color:var(--note);background:var(--note-soft)} .callout-note .callout-label{color:var(--note)}
+.callout-warning{border-color:var(--warn);background:var(--warn-soft)} .callout-warning .callout-label{color:var(--warn)}
+.callout-decision{border-color:var(--decision);background:var(--decision-soft)} .callout-decision .callout-label{color:var(--decision)}
+
+/* Tables */
+.scrollx{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th{color:var(--brand);font-size:13.5px;text-align:start;padding:0 10px 8px;border-bottom:1px solid var(--line-strong);white-space:nowrap}
+td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:start;vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.num,th.num{direction:ltr;text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* RTL blocks: dir="rtl" goes on the block, never on <html>. Logical properties make this work. */
+[dir="rtl"]{text-align:start}
+[dir="rtl"] pre,[dir="rtl"] code,[dir="rtl"] .codewrap{direction:ltr}
+
+footer{margin-top:32px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:13px;display:flex;flex-wrap:wrap;gap:4px 24px;justify-content:space-between}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+@media print{section.sec{break-inside:avoid}button{display:none}nav#toc{position:static}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="mast">
+  <div>
+    <h1 id="page-title">Page title</h1>
+    <p class="lede" id="page-lede">One sentence saying what this page is and who it is for.</p>
+    <div class="meta"><span><b>Updated</b> <span id="page-date">2026-01-01</span></span><span><b>Status</b> draft</span></div>
+  </div>
+  <button class="theme" type="button" id="theme-toggle" aria-label="Switch color theme">Theme: system</button>
+</header>
+
+<div class="layout">
+<nav id="toc" aria-label="Contents">
+  <div class="toc-title">Contents</div>
+  <ol>
+    <li><a href="#s1">What this is</a></li>
+    <li><a href="#s2">How to run it</a></li>
+    <li><a href="#s3">Reference table</a></li>
+    <li><a href="#s4">Hebrew block</a></li>
+    <li><a href="#sources">Sources</a></li>
+  </ol>
+</nav>
+
+<main id="content">
+
+<section class="sec" id="s1"><details open><summary><span class="n">01</span><h2>What this is</h2></summary>
+<div class="body">
+<p>Body copy. Lead with the thing that changes what the reader does next. Keep each paragraph to one idea.</p>
+<div class="callout callout-note"><span class="callout-label">Note</span><p>A note gives context the reader needs before the next step.</p></div>
+<div class="callout callout-warning"><span class="callout-label">Warning</span><p>A warning names what breaks and how to notice it.</p></div>
+<div class="callout callout-decision"><span class="callout-label">Decision</span><p>A decision states what was chosen, when, and the one reason that mattered.</p></div>
+</div></details></section>
+
+<section class="sec" id="s2"><details open><summary><span class="n">02</span><h2>How to run it</h2></summary>
+<div class="body">
+<p>Every command comes with its expected output.</p>
+<div class="codewrap"><pre><code>kubectl get pods -n example
+# Expected: every pod Running, 0 restarts</code></pre></div>
+<ol><li>First step, one action.</li><li>Second step, with its check.</li></ol>
+</div></details></section>
+
+<section class="sec" id="s3"><details open><summary><span class="n">03</span><h2>Reference table</h2></summary>
+<div class="body">
+<div class="scrollx"><table>
+<thead><tr><th>Thing</th><th class="num">Value</th><th>Owner (role)</th></tr></thead>
+<tbody>
+<tr><td>Build timeout</td><td class="num">45 min</td><td>platform lead</td></tr>
+<tr><td>Retention</td><td class="num">30 days</td><td>on-call</td></tr>
+</tbody>
+</table></div>
+</div></details></section>
+
+<section class="sec" id="s4"><details open><summary><span class="n">04</span><h2>Hebrew block</h2></summary>
+<div class="body">
+<p>The paragraph below has <code>dir="rtl" lang="he"</code> on its own block. The page stays LTR; code inside stays LTR.</p>
+<div dir="rtl" lang="he">
+<p>פסקה לדוגמה בעברית. הטקסט נקרא מימין לשמאל, והפקודה <code>kubectl get pods</code> נשארת משמאל לימין.</p>
+<ul><li>פריט ראשון</li><li>פריט שני</li></ul>
+</div>
+</div></details></section>
+
+<section class="sec sources" id="sources"><details open><summary><span class="n">05</span><h2>Sources</h2></summary>
+<div class="body">
+<ul>
+<li>Where each fact on this page came from: a file path, a ticket key, a meeting date, a person's role.</li>
+<li>Mark anything not yet verified as <strong>unverified</strong>.</li>
+</ul>
+</div></details></section>
+
+</main>
+</div>
+
+<footer>
+  <span id="footer-line">Footer line set by the user, or empty</span>
+  <span>Single file, no external requests</span>
+</footer>
+
+</div>
+
+<script>
+(function () {
+  // Theme: system (nothing stamped) -> dark -> light -> system. Remembered per browser if storage works.
+  var root = document.documentElement, btn = document.getElementById('theme-toggle');
+  var order = ['system', 'dark', 'light'];
+  function apply(mode) {
+    if (mode === 'system') root.removeAttribute('data-theme'); else root.setAttribute('data-theme', mode);
+    if (btn) btn.textContent = 'Theme: ' + mode;
+    try { localStorage.setItem('theme', mode); } catch (e) {}
+  }
+  var saved = 'system';
+  try { saved = localStorage.getItem('theme') || 'system'; } catch (e) {}
+  if (order.indexOf(saved) < 0) saved = 'system';
+  apply(saved);
+  if (btn) btn.addEventListener('click', function () {
+    var cur = root.getAttribute('data-theme') || 'system';
+    apply(order[(order.indexOf(cur) + 1) % order.length]);
+  });
+
+  // Copy button on every code block.
+  function copyText(text, done) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { fallback(text, done); });
+    } else { fallback(text, done); }
+  }
+  function fallback(text, done) {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta); done();
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('pre'), function (pre) {
+    var wrap = pre.parentNode;
+    if (!wrap.classList || !wrap.classList.contains('codewrap')) {
+      wrap = document.createElement('div'); wrap.className = 'codewrap';
+      pre.parentNode.insertBefore(wrap, pre); wrap.appendChild(pre);
+    }
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'copy'; b.textContent = 'Copy';
+    b.addEventListener('click', function () {
+      copyText(pre.textContent, function () {
+        b.textContent = 'Copied'; setTimeout(function () { b.textContent = 'Copy'; }, 1500);
+      });
+    });
+    wrap.appendChild(b);
+  });
+
+  // Open the section a TOC link or a shared URL points at, then scroll to it.
+  function openTarget() {
+    var id = location.hash.slice(1); if (!id) return;
+    var el = document.getElementById(id); if (!el) return;
+    var d = el.querySelector('details'); if (d) d.open = true;
+    el.scrollIntoView();
+  }
+  window.addEventListener('hashchange', openTarget);
+  openTarget();
+})();
+</script>
+</body>
+</html>

@@ -77,7 +77,7 @@ Success: the answer says under 60 characters, imperative, no attribution trailer
 /skills list
 ```
 
-Success: twelve skills, `commit` through `skill-writer`, source `~/.copilot/skills`. If one is missing, `/skills info <name>`, then check the three silent failures: folder under `~/.copilot/skills/`, file named `SKILL.md`, `name:` equals the folder. After fixing, `/skills reload`.
+Success: eighteen skills, `architecture-diagram` through `weekly-status`, source `~/.copilot/skills`. If one is missing, `/skills info <name>`, then check the three silent failures: folder under `~/.copilot/skills/`, file named `SKILL.md`, `name:` equals the folder. After fixing, `/skills reload`.
 
 ## 7. Trigger `commit` on the scratch repo (2 min)
 

@@ -1,0 +1,35 @@
+" ~/.vimrc: the fallback editor for git commit, rebase and kubectl edit when
+" `code --wait` is not available (VS Code server not yet downloaded, no display).
+" Small on purpose. Plain vim, no plugins.
+set nocompatible
+syntax on
+filetype plugin indent on
+set encoding=utf-8
+set number
+set ruler
+set showcmd
+set wildmenu
+set scrolloff=4
+set backspace=indent,eol,start
+set tabstop=4 shiftwidth=4 expandtab smarttab autoindent
+set incsearch hlsearch ignorecase smartcase
+set nowrap
+set hidden
+set mouse=a
+set clipboard=
+" YAML and Markdown: two spaces, wrap prose
+autocmd FileType yaml,markdown setlocal tabstop=2 shiftwidth=2
+autocmd FileType markdown setlocal wrap linebreak
+" Enter clears search highlights
+nnoremap <silent> <CR> :nohlsearch<CR><CR>
+" keep the selection after shifting
+vnoremap < <gv
+vnoremap > >gv
+" Y yanks to end of line, like D and C
+nnoremap Y y$
+" copy the selection to the Windows clipboard in WSL (visual mode, leader = backslash)
+if executable('clip.exe')
+  vnoremap <leader>y :w !clip.exe<CR><CR>
+endif
+" remember the cursor position
+autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
