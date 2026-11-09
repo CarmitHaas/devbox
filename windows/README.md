@@ -32,9 +32,9 @@ plus the command to run.
    `notepad $env:USERPROFILE\.wslconfig` (paste the block from `../wsl/README.md`), then `wsl --shutdown`
 10. Windows Terminal: default profile Ubuntu, font, copy on select. Details in `terminal-settings.md`.
     `wt` then `Ctrl+,`
-11. VS Code: the WSL extension plus the usual suspects. Extensions go through the proxy fine because VS Code uses the Windows cert store.
-    `code --install-extension ms-vscode-remote.remote-wsl; code --install-extension hashicorp.terraform; code --install-extension redhat.vscode-yaml; code --install-extension ms-kubernetes-tools.vscode-kubernetes-tools; code --install-extension eamodio.gitlens`
-12. ADMIN: Docker Desktop, then Settings > Resources > WSL integration > enable for Ubuntu-22.04.
+11. VS Code: the extensions in `vscode-extensions.txt` (WSL, Copilot, Terraform, YAML, Kubernetes, Jenkinsfile, GitHub Actions, shell, draw.io), then merge `vscode-settings.json` into your user settings (default terminal = WSL, LF line endings). Extensions go through the proxy fine because VS Code uses the Windows cert store. Linter credentials (for example a Jenkins pipeline linter user) are typed into user settings by hand and never committed anywhere.
+    `.\install-vscode-extensions.ps1 -DryRun; .\install-vscode-extensions.ps1`
+12. ADMIN: Docker Desktop, then Settings > Resources > WSL integration > enable for Ubuntu-22.04. No admin or no licence? Docker Engine inside WSL works without it: `sudo apt-get install -y docker.io docker-compose-v2 && sudo usermod -aG docker $USER` (needs `systemd=true` in `/etc/wsl.conf`, see `../wsl/README.md`).
     `.\install.ps1 -IncludeAdmin`
 13. PowerToys: turn on Run (Alt+Space), FancyZones, PowerRename, File Locksmith, Text Extractor, Paste as Plain Text. Everything else off.
     Start PowerToys, then Settings (gear in the tray icon)
@@ -115,6 +115,8 @@ Thanks.
 | File | What it does |
 |---|---|
 | `install.ps1` | winget installs from the JSON lists, user scope first, summary table |
+| `install-vscode-extensions.ps1`, `vscode-extensions.txt` | VS Code extensions from the list; `-DryRun` |
+| `vscode-settings.json` | user-settings keys to merge: WSL as default terminal, LF, 2-space YAML and Terraform |
 | `winget-packages.json` | core package list (`winget import` compatible) |
 | `winget-packages-optional.json` | optional packages (browsers) |
 | `wsl-enable.ps1` | ADMIN: enable WSL 2, install Ubuntu 22.04, with the manual fallback |

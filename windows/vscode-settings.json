@@ -1,0 +1,25 @@
+{
+  "// how to use": "Ctrl+Shift+P, 'Preferences: Open User Settings (JSON)', merge these keys in. Change the distro name if yours differs (wsl -l -v).",
+  "terminal.integrated.defaultProfile.windows": "Ubuntu (WSL)",
+  "terminal.integrated.profiles.windows": {
+    "Ubuntu (WSL)": { "path": "C:\\WINDOWS\\System32\\wsl.exe", "args": ["-d", "Ubuntu-22.04"] },
+    "PowerShell": { "source": "PowerShell", "icon": "terminal-powershell" }
+  },
+  "security.allowedUNCHosts": ["wsl.localhost"],
+  "files.autoSave": "afterDelay",
+  "files.eol": "\n",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "editor.renderWhitespace": "boundary",
+  "workbench.startupEditor": "none",
+  "git.confirmSync": false,
+  "git.autofetch": true,
+  "redhat.telemetry.enabled": false,
+  "telemetry.telemetryLevel": "off",
+  "github.copilot.enable": { "*": true, "plaintext": false, "scminput": false },
+  "[terraform]": { "editor.tabSize": 2, "editor.insertSpaces": true, "editor.formatOnSave": true },
+  "[terraform-vars]": { "editor.tabSize": 2, "editor.insertSpaces": true },
+  "[yaml]": { "editor.tabSize": 2, "editor.insertSpaces": true },
+  "[github-actions-workflow]": { "editor.defaultFormatter": "redhat.vscode-yaml" },
+  "[markdown]": { "editor.wordWrap": "on", "files.trimTrailingWhitespace": false }
+}

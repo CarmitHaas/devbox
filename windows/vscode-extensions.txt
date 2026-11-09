@@ -1,0 +1,30 @@
+# VS Code extensions, one id per line. Lines starting with # are skipped.
+# Install all: .\install-vscode-extensions.ps1   (or -DryRun to list)
+# Remote: the editor on Windows, the files and tools in WSL
+ms-vscode-remote.remote-wsl
+ms-vscode-remote.remote-ssh
+ms-vscode-remote.remote-containers
+# AI
+github.copilot
+github.copilot-chat
+# Git and CI
+eamodio.gitlens
+github.vscode-github-actions
+ivory-lab.jenkinsfile-support
+janjoerke.jenkins-pipeline-linter-connector
+# Infra as code, Kubernetes, containers
+hashicorp.terraform
+redhat.vscode-yaml
+ms-kubernetes-tools.vscode-kubernetes-tools
+ms-azuretools.vscode-containers
+# Shell and scripting
+mads-hartmann.bash-ide-vscode
+timonwong.shellcheck
+foxundermoon.shell-format
+ms-vscode.powershell
+ms-python.python
+ms-python.vscode-pylance
+# Docs and diagrams
+yzhang.markdown-all-in-one
+hediet.vscode-drawio
+mechatroner.rainbow-csv
